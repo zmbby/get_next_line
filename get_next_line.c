@@ -35,36 +35,33 @@ char	*fill_line(t_buff *buff, char *line, int fd)
 
 char	*get_next_line(int fd)
 {
-	static t_buff	buff;
+	static t_buff	buff[1024];
 	char			*line;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || !init_buffer(&buff))
+	if (fd < 0 || BUFFER_SIZE <= 0 || !init_buffer(&buff[fd]))
 		return (NULL);
-	line = fill_line(&buff, line, fd);
+	line = fill_line(&buff[fd], line, fd);
 	if (!line)
 	{
-		free(buff.buffer);
-		buff.buffer = NULL;
+		free(buff[fd].buffer);
+		buff[fd].buffer = NULL;
 	}
 	return (line);
 }
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
+int	main(void)
+{
+	int		fd;
+	char	*line;
 
-// 	fd = open("text.txt", O_RDWR);
-// 	if (fd < 0)
-// 	{
-// 		perror("Failed to open file");
-// 		return (1);
-// 	}
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("text.txt", O_RDWR);
+	int fd1 = open("text1.txt", O_RDWR);
+	line = get_next_line(fd);
+	printf("%s", line);
+	line = get_next_line(fd1);
+	printf("%s", line);
+	close(fd);
+	close(fd1);
+	free(line);
+	return (0);
+}
