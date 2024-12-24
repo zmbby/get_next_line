@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*fill_line(t_buff *buff, char *line, int fd)
 {
@@ -39,13 +39,12 @@ char	*get_next_line(int fd)
 	char			*line;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || !init_buffer(&buff[fd]))
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = fill_line(&buff[fd], line, fd);
 	if (!line)
 	{
-		free(buff[fd].buffer);
-		buff[fd].buffer = NULL;
+		return (NULL);
 	}
 	return (line);
 }
@@ -55,13 +54,12 @@ int	main(void)
 	char	*line;
 
 	fd = open("text.txt", O_RDWR);
-	int fd1 = open("text1.txt", O_RDWR);
 	line = get_next_line(fd);
 	printf("%s", line);
-	line = get_next_line(fd1);
-	printf("%s", line);
-	close(fd);
-	close(fd1);
 	free(line);
+	line = get_next_line(fd);
+	printf("%s", line);
+	free(line);
+	close(fd);
 	return (0);
 }
