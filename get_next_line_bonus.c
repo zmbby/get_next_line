@@ -28,6 +28,7 @@ char	*fill_line(t_buff *buff, char *line, int fd)
 					buff->buffer = NULL;
 					return (line);
 				}
+				free(buff->buffer);
 				free(line);
 				return (NULL);
 			}
@@ -35,7 +36,6 @@ char	*fill_line(t_buff *buff, char *line, int fd)
 		line = read_from_buffer(buff, line);
 		if (!line || (line[ft_strlen(line) - 1] == '\n'))
 			return (line);
-	}
 }
 
 char	*get_next_line(int fd)
@@ -60,10 +60,10 @@ char	*get_next_line(int fd)
 // 	line = get_next_line(fd);
 // 	printf("%s", line);
 // 	free(line);
-// 	line = get_next_line(fd);
-// 	// line = get_next_line(fd);
-// 	printf("%s", line);
-// 	free(line);
+	// line = get_next_line(fd);
+	// line = get_next_line(fd);
+	// printf("%s", line);
+	// free(line);
 // 	close(fd);
 // 	return (0);
 // }
