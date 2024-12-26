@@ -20,12 +20,12 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
+#  define BUFFER_SIZE 1000
 # endif
 
 typedef struct s_buff
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 	int		buffer_index;
 	int		bytes_read;
 }			t_buff;
@@ -35,5 +35,7 @@ char		*ft_strjoin(char *s1, char *s2);
 char		*ft_realloc(char *old_str, char *append);
 int			init_buffer(t_buff *buff);
 char		*read_from_buffer(t_buff *buff, char *line);
+size_t		ft_strlen(char *str);
+void		*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif

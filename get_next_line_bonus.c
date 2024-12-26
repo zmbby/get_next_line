@@ -23,12 +23,17 @@ char	*fill_line(t_buff *buff, char *line, int fd)
 			if (buff->bytes_read <= 0)
 			{
 				if (buff->bytes_read == 0)
+				{
+					free(buff->buffer);
+					buff->buffer = NULL;
 					return (line);
+				}
+				free(line);
 				return (NULL);
 			}
 		}
 		line = read_from_buffer(buff, line);
-		if (!line || (line[strlen(line) - 1] == '\n'))
+		if (!line || (line[ft_strlen(line) - 1] == '\n'))
 			return (line);
 	}
 }
@@ -39,27 +44,26 @@ char	*get_next_line(int fd)
 	char			*line;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024 || !init_buffer(&buff[fd]))
 		return (NULL);
 	line = fill_line(&buff[fd], line, fd);
 	if (!line)
-	{
 		return (NULL);
-	}
 	return (line);
 }
-int	main(void)
-{
-	int		fd;
-	char	*line;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open("text.txt", O_RDWR);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	close(fd);
-	return (0);
-}
+// 	fd = open("test", O_RDWR);
+// 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	// line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	close(fd);
+// 	return (0);
+// }

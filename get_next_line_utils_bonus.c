@@ -45,9 +45,24 @@ char	*ft_realloc(char *old_str, char *append)
 	return (new_str);
 }
 
+int	init_buffer(t_buff *buff)
+{
+
+	if (!buff->buffer)
+	{
+		buff->buffer = malloc((size_t)BUFFER_SIZE);
+		if (!buff->buffer)
+			return (0);
+	}
+	return (1);
+}
+
 char	*read_from_buffer(t_buff *buff, char *line)
 {
 	char	temp[2];
+
+	temp[0] = 0;
+	temp[1] = 0;
 
 	while (buff->buffer_index < buff->bytes_read)
 	{
