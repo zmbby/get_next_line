@@ -36,6 +36,7 @@ char	*fill_line(t_buff *buff, char *line, int fd)
 		line = read_from_buffer(buff, line);
 		if (!line || (line[ft_strlen(line) - 1] == '\n'))
 			return (line);
+	}
 }
 
 char	*get_next_line(int fd)
